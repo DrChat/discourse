@@ -62,7 +62,10 @@ module OmniAuth
           options[:client_options][:userinfo_endpoint] = discovery_document[
             "userinfo_endpoint"
           ].to_s
-        options.use_userinfo = false if userinfo_endpoint.nil? || userinfo_endpoint.empty?
+        
+        # HACK: Avoid using `userinfo` endpoint in all cases.
+        # options.use_userinfo = false if userinfo_endpoint.nil? || userinfo_endpoint.empty?
+        options.use_userinfo = false
 
         if discovery_document["token_endpoint_auth_methods_supported"] &&
              !discovery_document["token_endpoint_auth_methods_supported"].include?(
